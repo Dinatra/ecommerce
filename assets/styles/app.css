@@ -1,0 +1,26 @@
+/*.input-wrapper {*/
+/*    @apply relative;*/
+/*    @apply mb-4;*/
+/*}*/
+
+/*.input-wrapper input {*/
+/*    @apply w-full;*/
+/*    @apply bg-white;*/
+/*    @apply rounded;*/
+/*    @apply border;*/
+/*    @apply border-gray-300;*/
+/*    @apply focus:border-green-500;*/
+/*    @apply focus:ring-2;*/
+/*    @apply focus:ring-green-200;*/
+/*    @apply text-base;*/
+/*    @apply outline-none;*/
+/*    @apply text-gray-700;*/
+/*    @apply py-1;*/
+/*    @apply px-3;*/
+/*    @apply leading-8;*/
+/*    @apply transition-colors;*/
+/*    @apply duration-200;*/
+/*    @apply ease-in-out;*/
+/*}*/
+
+/* this file dont work and need to be patched */

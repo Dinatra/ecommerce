@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma commande{% endblock %}
+
+{% block body %}
+    <div class="example-wrapper">
+        {% set formHtml %}
+            {{ form_start(form, {action:path('order_overview')}) }}
+            {{ form_end(form) }}
+        {% endset %}
+    </div>
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-20">
+                <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Je passe ma commande</h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Choisissez vos préférences avant de passer votre
+                    commande sur notre boutique DzShop.</p>
+            </div>
+            <div class="lg:w-2/3 w-full mx-auto overflow-auto flex flex-row">
+                <div class="form-wrapper w-1/2">
+                    {{ formHtml|replace({'[br]': '<br/>'})|raw }}
+                </div>
+                <div class="flex flex-col flex-1 mt-8 p-5 rounded ml-2 border border-gray-300">
+                    {% for product in cart %}
+                        <div class="flex flex-row mb-2 pt-2">
+                            <div class="w-16">
+                                <img class="w-full object-cover"
+                                     src="/uploads/{{ product.product.illustration }}"
+                                     alt="{{ product.product.name }}">
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-gray-900 font-medium title-font tracking-wider text-sm">{{ product.product.name }}</p>
+                                <p class="text-gray-500 text-xs">{{ product.product.subtitle }}</p>
+                            </div>
+                            <div class="flex-1">
+                                <p>x{{ product.quantity }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <style>
+        #order_addresses, #order_carriers {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            padding: 15px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #00000026;
+            border-radius: 0.25rem;
+        }
+
+        #order_addresses input, #order_carriers input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+
+        .form-wrapper label {
+            margin-bottom: 5px;
+            width: 300px;
+        }
+    </style>
+{% endblock %}
+
+

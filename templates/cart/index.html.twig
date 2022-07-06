@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block body %}
+
+
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-20">
+                <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Mon panier</h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Banh mi cornhole echo park skateboard authentic
+                    crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee</p>
+            </div>
+            <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                {% if cart|length > 0 %}
+                <table class="table-auto w-full text-left whitespace-no-wrap">
+                    <thead>
+                    <tr>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                            Produit
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Quantité
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Prix
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Total
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set total = null %}
+                    {% for product in cart %}
+                        <tr>
+                            <td class="px-4 py-3">
+                                <div class="w-16">
+                                    <img class="w-full object-cover"
+                                         src="/uploads/{{ product.product.illustration }}"
+                                         alt="{{ product.product.name }}">
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 font-bold">
+                                {{ product.product.name }}
+                                <br>
+                                <p class="text-xs text-gray-400 font-normal">
+                                    {{ product.product.subtitle }}
+                                </p>
+                            </td>
+                            <td class="mt-7 flex flex-row flex-wrap">
+                                <a href="{{ path('decrease_from_cart', { 'id': product.product.id }) }}" class="text-red-500">
+                                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M20 12H4"></path>
+                                    </svg>
+                                </a>
+                                <p class="mr-2">{{ product.quantity }}</p>
+                                <a href="{{ path('add_to_cart', { 'id': product.product.id }) }}" class="text-green-400">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">{{ (product.product.price / 100)|number_format(2,',', '.') }}$
+                            </td>
+                            <td class="px-4 py-3 text-lg text-gray-900">{{ (product.quantity * product.product.price / 100)|number_format(2,',', '.') }}
+                                $
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="{{ path('delete_from_cart', { 'id': product.product.id }) }}">
+                                    {# <img class="w-6" src="{{ asset('assets/img/trash.png') }}" alt=""> #}
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        {% set total = total + (product.product.price * product.quantity) %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-between flex-row lg:w-2/3 mx-auto mt-5 border-t border-gray-200">
+                <div class="pl-4 mt-4 w-1/2">
+                    <p>Nombre de produit : {{ cart|length }}</p>
+                    <p>Total de mon panier : {{ (total / 100)|number_format(2,',', '.') }}$</p>
+                </div>
+                <div class="pl-4 mt-4 w-1/2 text-center">
+                    <a href="{{ path('order') }}" class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
+                        Payer
+                    </a>
+                </div>
+            </div>
+            {% else %}
+                <div class="lg:w-2/3 mx-auto mt-5 border-t border-gray-200 pt-5">
+                    <h1 class="text-center">Votre panier est vide</h1>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

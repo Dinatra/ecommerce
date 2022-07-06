@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commandes{% endblock %}
+
+{% block body %}
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col">
+                <h1>Ma commande {{  order.reference }}</h1>
+
+                <div class="border-t border-gray-200 my-5 w-full block"></div>
+            </div>
+            <div class="flex flex-wrap -m-4">
+                <div class="lg:w-2/3 w-full mx-auto overflow-auto mt-10">
+                    {{ dump(order) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

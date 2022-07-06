@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Une erreur s'est passée durant votre commande{% endblock %}
+
+{% block body %}
+
+    <div class="w-2/3 mx-auto mt-20 mb-10">
+        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            <span
+                    class="block text-red-400 xl:inline">Erreur</span> à propos de votre commande</h1>
+        <div class="border border-gray-300 rounded mt-20 p-8 ">
+            <div class="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-red-200 text-red-700 rounded-full mb-4">
+                {{ order.reference }}
+            </div>
+            <div class="divide-y-2 divide-dashed md:divide-solid">
+                <div class="mb-4">
+                    <p class="text-base text-gray-500 sm:mt-5 sm:text-lg">Bonjour {{ order.user.firstname }} {{ order.user.lastname }}</p>
+                    <p class="text-base text-gray-500 sm:mt-5 sm:text-lg">Il semblerait qu'il y ai une erreur à propos de votre commande</p>
+                    <p class="text-base text-gray-500 sm:mt-5 sm:text-lg">Votre commande devait être livrée à l'adresse suivante via {{ order.carrierName }} </p>
+                </div>
+                <div>
+                    <p class="mt-4">{{ order.delivery|raw }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

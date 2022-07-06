@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresses{% endblock %}
+
+{% block body %}
+    <section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+    {% if app.user.addresses|length == 0 %}
+        <div class="flex flex-col justify-content-between items-center">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                <p class="text-yellow-300">
+                    <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </p>
+                <p class="mt-5">
+                    Vous avez actuellement aucune adresse d'enregistré, veuillez en ajouter une afin de bénéficier des
+                    fonctionalités d'achat de la plateforme.
+                </p>
+            </h2>
+            <div class="border-t border-gray-200 my-5 w-full"></div>
+            <a href="{{ path('account_address_add') }}"
+               class="text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded text-xs">
+                Ajouter une adresse
+            </a>
+        </div>
+    {% else %}
+        <div class="flex flex-col items-end">
+            <a href="{{ path('account_address_add') }}"
+               class="text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded text-xs">
+                Ajouter une adresse
+            </a>
+            <div class="border-t border-gray-200 my-5 w-full"></div>
+        </div>
+        <div class="flex flex-wrap -m-4">
+            {% for address in app.user.addresses %}
+                <div class="p-4 md:w-1/3">
+                    <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                                {{ address.name }}
+                            </h2>
+                            <h1 class="title-font text-lg font-medium text-gray-900 mb-3">{{ address.address }}</h1>
+                            <p class="leading-relaxed mb-3">
+                                {{ address.postal }} - {{ address.city }} - {{ address.country }}
+                            </p>
+                            <div class="flex items-start flex-wrap ">
+                                <a href="{{ path('account_address_update', { 'id': address.id }) }}"
+                                   class="mr-4 text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded text-xs">
+                                    Modifier
+                                </a>
+                                <a href="{{ path('account_address_delete',{ 'id': address.id } ) }}"
+                                   class="mr-4 text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded text-xs">
+                                    Supprimer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+        </section>
+    {% endif %}
+{% endblock %}

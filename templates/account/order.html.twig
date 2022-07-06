@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+    <section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+    {% if orders|length == 0 %}
+        <div class="flex flex-col justify-content-between items-center">
+            <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                <p class="text-yellow-300">
+                    <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </p>
+                <p class="mt-5">
+                    Vous n'avez actuellement aucune commande.
+                </p>
+            </h2>
+            <div class="border-t border-gray-200 my-5 w-full"></div>
+            <a href="{{ path('product') }}"
+               class="text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded text-xs">
+                Passer une commande
+            </a>
+        </div>
+    {% else %}
+        <div class="flex flex-col items-end">
+            <a href="{{ path('account_address_add') }}"
+               class="text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded text-xs">
+                Ajouter une adresse
+            </a>
+            <div class="border-t border-gray-200 my-5 w-full"></div>
+        </div>
+        <div class="flex flex-wrap -m-4">
+            <div class="lg:w-2/3 w-full mx-auto overflow-auto mt-10">
+                <table class="table-auto w-full text-left whitespace-no-wrap">
+                    <thead>
+                    <tr>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Référence
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                            Passée le
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Produits
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            Total
+                        </th>
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                <div
+                                        class="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-blue-700 rounded-full"
+                                >
+                                    {{ order.reference }}
+                                </div>
+                            </td>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">{{ order.createdAt|date('d/m/Y') }}</td>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">{{ order.orderDetails|length }}</td>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900">{{ ((order.getTotal + order.carrierPrice) / 100)|number_format(2, ',', '.') }}$</td>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900 text-right">
+                                <a href="{{  path('account_order_show', { 'reference': order.reference}) }}" class="underline text-blue-500">Voir ma
+                                    commande</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        </div>
+        </section>
+    {% endif %}
+{% endblock %}
